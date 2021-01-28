@@ -1,6 +1,5 @@
 import {getRepository} from 'typeorm'
 import User from '../models/User'
-import Adress from '../models/Adress'
 import {Request, Response} from 'express'
 import * as Yup from 'yup'
 
@@ -9,9 +8,14 @@ export default{
 
     async save(req: Request, res: Response){
         const{
+            username,
+            password,
             name,
             lastName,
             birthday,
+            nfe,
+            telephone,
+            telephone2,
             country,
             state,
             city,
@@ -23,20 +27,24 @@ export default{
         } = req.body
         
         const user = new User
-        const adress = new Adress
         
+        user.username=username
+        user.password=password
         user.name=name
         user.lastName=lastName
         user.birthday=birthday
-        adress.country=country
-        adress.state=state
-        adress.city=city
-        adress.zipCode=zipCode
-        adress.zone=zone
-        adress.street=street
-        adress.number=number
-        adress.complement=complement
-        user.adress=adress
+        user.nfe=nfe
+        user.telephone=telephone
+        user.telephone2=telephone2
+        user.country=country
+        user.state=state
+        user.city=city
+        user.zipCode=zipCode
+        user.zone=zone
+        user.street=street
+        user.number=number
+        user.complement=complement
+        
 
         const userRep = getRepository(User)
         
@@ -54,27 +62,30 @@ export default{
 
     async searchAll(req: Request, res: Response){
         const userRep = getRepository(User)
-        const users = await userRep.find({relations:["adress"]})
+        const users = await userRep.find()
         res.json(users)
     },//FUNCTION SEARCHALL
 
     async searchOne(req: Request, res: Response){
         const {id} = req.params
         const userRep = getRepository(User)
-        const users = await userRep.find({relations:["adress"],where:{id:id}})
+        const users = await userRep.find({where:{id:id}})
         res.json(users)
 
     },//FUNCTION SEARCHONE
 
     async update(req: Request, res: Response){
         const userRep = getRepository(User)
-        const adressRep = getRepository(Adress)
         const{
-            idUser,
-            idAdress,
+            id,
+            username,
+            password,
             name,
             lastName,
             birthday,
+            nfe,
+            telephone,
+            telephone2,
             country,
             state,
             city,
@@ -86,26 +97,29 @@ export default{
         } = req.body
         
         const user = new User
-        const adress = new Adress
-        user.id=idUser
+        
+        user.id=id
+        user.username=username
+        user.password=password
         user.name=name
         user.lastName=lastName
         user.birthday=birthday
-        adress.id=idAdress
-        adress.country=country
-        adress.state=state
-        adress.city=city
-        adress.zipCode=zipCode
-        adress.zone=zone
-        adress.street=street
-        adress.number=number
-        adress.complement=complement
+        user.nfe=nfe
+        user.telephone=telephone
+        user.telephone2=telephone2
+        user.country=country
+        user.state=state
+        user.city=city
+        user.zipCode=zipCode
+        user.zone=zone
+        user.street=street
+        user.number=number
+        user.complement=complement
 
 
 
 
         userRep.update(user.id,user)
-        adressRep.update(adress.id,adress)
 
         res.json("Usuário atualizado")
         
@@ -114,16 +128,13 @@ export default{
 
     async delete(req: Request, res: Response){
         const userRep = getRepository(User)
-        const adressRep = getRepository(Adress)
         const{
-            idUser,
-            idAdress,
+            id,
         } = req.body
         
-        userRep.delete(idUser)
-        adressRep.delete(idAdress)
+        userRep.delete(id)
 
-        res.json("Usuário e Endereço Deletados")
+        res.json("Usuário Deletado")
 
     }
 
