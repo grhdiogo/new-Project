@@ -1,6 +1,7 @@
 import {Entity,Column,PrimaryGeneratedColumn,ManyToOne,OneToMany} from 'typeorm'
 import User from "./User"
-import itemOrder from "./itemOrder"
+import ItemOrder from "./itemOrder"
+import Voucher from './Voucher'
 
 @Entity('order')
 export default class Order{
@@ -10,10 +11,16 @@ export default class Order{
     status: string;
     @Column()
     total: number;
-    @OneToMany(()=>itemOrder,itemOrder => itemOrder.order,{cascade:['insert','update']})
-    itemOrder: itemOrder[]
+    @Column({ type: 'date' })
+    deliverDay: Date;
+    @Column()
+    deliverPeriod: string;
+    @OneToMany(()=>ItemOrder,itemOrder => itemOrder.order,{cascade:['insert','update']})
+    itemOrder: ItemOrder[]
     @ManyToOne(()=>User, user => user.order)
     user: User
+    @ManyToOne(()=>Voucher, voucher => voucher.order)
+    voucher: Voucher
 
     
   

@@ -1,5 +1,6 @@
 import {getRepository} from 'typeorm'
 import User from '../models/User'
+import Cep from '../models/Cep'
 import {Request, Response} from 'express'
 import * as Yup from 'yup'
 
@@ -23,10 +24,12 @@ export default{
             zone,
             street,
             number,
-            complement
+            complement,
+            cepID
         } = req.body
         
         const user = new User
+        const cep = new Cep
         
         user.username=username
         user.password=password
@@ -36,14 +39,15 @@ export default{
         user.nfe=nfe
         user.telephone=telephone
         user.telephone2=telephone2
-        user.country=country
-        user.state=state
-        user.city=city
-        user.zipCode=zipCode
-        user.zone=zone
-        user.street=street
+        cep.country=country
+        cep.state=state
+        cep.city=city
+        cep.zipCode=zipCode
+        cep.zone=zone
+        cep.street=street
         user.number=number
         user.complement=complement
+        user.cep=cep
         
 
         const userRep = getRepository(User)
@@ -97,6 +101,7 @@ export default{
         } = req.body
         
         const user = new User
+        const cep = new Cep
         
         user.id=id
         user.username=username
@@ -107,14 +112,15 @@ export default{
         user.nfe=nfe
         user.telephone=telephone
         user.telephone2=telephone2
-        user.country=country
-        user.state=state
-        user.city=city
-        user.zipCode=zipCode
-        user.zone=zone
-        user.street=street
+        cep.country=country
+        cep.state=state
+        cep.city=city
+        cep.zipCode=zipCode
+        cep.zone=zone
+        cep.street=street
         user.number=number
         user.complement=complement
+        user.cep=cep
 
 
 

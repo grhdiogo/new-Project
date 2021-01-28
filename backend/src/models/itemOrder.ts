@@ -6,7 +6,7 @@ import Product from "./Product"
 export default class ItemOrder{
     @PrimaryGeneratedColumn()
     id: number;
-    @Column()
+    @Column("decimal", {scale: 2 })
     price: number;
     @Column()
     quantity: number;

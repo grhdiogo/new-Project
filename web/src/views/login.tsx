@@ -2,7 +2,7 @@ import React from 'react'
 
 function login(){
     return(
-        <form action="/login" method="get">
+        <form action="/login" method="post">
             <input type="text" id="username"/><br/>
             <input type="password" id="password"/><br/>
             <input type="submit" value="Enviar"/><br/>

@@ -1,5 +1,6 @@
-import {Entity,Column,PrimaryGeneratedColumn,OneToMany} from 'typeorm'
+import {Entity,Column,PrimaryGeneratedColumn,OneToMany,OneToOne, JoinColumn} from 'typeorm'
 import Order from './Order';
+import Cep from './Cep'
 
 
 @Entity('user')
@@ -11,11 +12,13 @@ export default class User{
     @Column()
     password: string;
     @Column()
+    cpf_cnpj: string;
+    @Column()
     name: string;
     @Column()
     lastName: string;
-    @Column()
-    birthday: string;
+    @Column({ type: 'date' })
+    birthday: Date;
     @Column()
     nfe: string;
     @Column()
@@ -23,23 +26,14 @@ export default class User{
     @Column()
     telephone2: number;
     @Column()
-    country: string;
-    @Column()
-    state: string;
-    @Column()
-    city: string;
-    @Column()
-    zipCode: number;
-    @Column()
-    zone: string;
-    @Column()
-    street: string;
-    @Column()
     number: number;
     @Column()
     complement: string;
     @OneToMany(()=>Order,order => order.user,{cascade:['insert','update']})
     order: Order[]
+    @OneToOne(()=>Cep,cep => cep.user)
+    @JoinColumn({name:"cepId"})
+    cep: Cep
 
 
 
