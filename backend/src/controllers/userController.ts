@@ -11,43 +11,35 @@ export default{
         const{
             username,
             password,
+            cpf_cnpj,
             name,
             lastName,
+            nickname,
             birthday,
             nfe,
             telephone,
             telephone2,
-            country,
-            state,
-            city,
-            zipCode,
-            zone,
-            street,
             number,
             complement,
-            cepID
+            cepId
         } = req.body
         
         const user = new User
-        const cep = new Cep
         
+
         user.username=username
         user.password=password
+        user.cpf_cnpj=cpf_cnpj
         user.name=name
         user.lastName=lastName
+        user.nickname=nickname
         user.birthday=birthday
         user.nfe=nfe
         user.telephone=telephone
         user.telephone2=telephone2
-        cep.country=country
-        cep.state=state
-        cep.city=city
-        cep.zipCode=zipCode
-        cep.zone=zone
-        cep.street=street
         user.number=number
         user.complement=complement
-        user.cep=cep
+        user.cep=cepId
         
 
         const userRep = getRepository(User)
@@ -66,14 +58,14 @@ export default{
 
     async searchAll(req: Request, res: Response){
         const userRep = getRepository(User)
-        const users = await userRep.find()
+        const users = await userRep.find({relations:["cep"]})
         res.json(users)
     },//FUNCTION SEARCHALL
 
     async searchOne(req: Request, res: Response){
         const {id} = req.params
         const userRep = getRepository(User)
-        const users = await userRep.find({where:{id:id}})
+        const users = await userRep.find({where:{id:id},relations:["cep"]})
         res.json(users)
 
     },//FUNCTION SEARCHONE
@@ -84,43 +76,36 @@ export default{
             id,
             username,
             password,
+            cpf_cnpj,
             name,
             lastName,
+            nickname,
             birthday,
             nfe,
             telephone,
             telephone2,
-            country,
-            state,
-            city,
-            zipCode,
-            zone,
-            street,
             number,
-            complement
+            complement,
+            cepId
         } = req.body
         
         const user = new User
-        const cep = new Cep
+
         
         user.id=id
         user.username=username
         user.password=password
+        user.cpf_cnpj=cpf_cnpj
         user.name=name
         user.lastName=lastName
+        user.nickname=nickname
         user.birthday=birthday
         user.nfe=nfe
         user.telephone=telephone
         user.telephone2=telephone2
-        cep.country=country
-        cep.state=state
-        cep.city=city
-        cep.zipCode=zipCode
-        cep.zone=zone
-        cep.street=street
         user.number=number
         user.complement=complement
-        user.cep=cep
+        user.cep=cepId
 
 
 

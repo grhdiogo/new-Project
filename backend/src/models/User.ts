@@ -17,8 +17,10 @@ export default class User{
     name: string;
     @Column()
     lastName: string;
-    @Column({ type: 'date' })
-    birthday: Date;
+    @Column()
+    nickname: string;
+    @Column()
+    birthday: string;
     @Column()
     nfe: string;
     @Column()

@@ -9,40 +9,49 @@ export default{
     async save(req: Request, res: Response){
         const{
             productID,
-            quantityProduct,
+            quantityProducts,
             quantity,
             price,
             userID,
+            paymentType,
+            deliverDay,
+            deliverPeriod,
+            voucher,
         } = req.body 
 
-        const manager = getManager()
-
-        const order = new Order
-        
         const itensOrder = []
         let totalOrder = 0
        
-        for (let i = 0; i < quantityProduct; i++) {
+        for (let i = 0; i < quantityProducts; i++) {
             let itemOrder = new ItemOrder
             itemOrder.price=price[i]
             itemOrder.quantity=quantity[i]
             itemOrder.product=productID[i]
+
             totalOrder = totalOrder+(price[i]*quantity[i])
-           manager.save(itemOrder)
-           
 
            itensOrder.push(itemOrder)
-           console.log(itensOrder)
         }
 
+        const orderRep = getRepository(Order)
+
+        const order = new Order
         order.status="Aguardando Confirmação"
+        order.total=totalOrder
+        order.paymentType=paymentType
+        order.deliverDay=deliverDay
+        order.deliverPeriod=deliverPeriod
         order.user=userID
         order.itemOrder=itensOrder
-        order.total=totalOrder
+
+        if(voucher!=0){
+            order.voucher=voucher
+        }
+        
 
         
         
-       manager.save(order)
+       orderRep.save(order)
 
         res.json(order)
     },

@@ -11,8 +11,10 @@ export default class Order{
     status: string;
     @Column()
     total: number;
-    @Column({ type: 'date' })
-    deliverDay: Date;
+    @Column()
+    paymentType: string;
+    @Column()
+    deliverDay: string;
     @Column()
     deliverPeriod: string;
     @OneToMany(()=>ItemOrder,itemOrder => itemOrder.order,{cascade:['insert','update']})
