@@ -47,14 +47,17 @@ export default{
         if(voucher!=0){
             order.voucher=voucher
         }
-        
-
-        
-        
+    
        orderRep.save(order)
 
         res.json(order)
-    },
+    },//FUNCTION SAVE
+
+    async searchAll(req: Request, res: Response){
+        const orderRep = getRepository(Order)
+        const orders = await orderRep.find({relations:['itemOrder','user']})
+        res.json(orders)
+    }
 
     
 }

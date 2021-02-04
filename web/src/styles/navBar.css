@@ -1,0 +1,27 @@
+#body{
+    position:relative;
+    background-color:rgb(199, 199, 245);
+    width: 100vw;
+
+    height: 100vh;
+    
+}
+#sideBar{
+    border: 2px solid blue;
+    width: 15%;
+    height: 100%;
+    float: left;
+}
+#header{
+    border: 2px solid black;
+    width: 85%;
+    height: 10%;
+    margin-left: 15vw;
+    
+}
+#content{
+    margin-left: 15%;
+    height: 90%;
+    border: 2px solid red;
+    width: 85vw;
+}

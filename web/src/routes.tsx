@@ -1,16 +1,19 @@
 import {BrowserRouter, Switch, Route} from 'react-router-dom'
-import React from 'react'
 
-import Login from './views/login'
-import Back from './views/back'
+
+import Orders from './views/orders'
+import CreateCep from './views/createCep'
+import Users from './views/users'
+
+
+
 function Routes(){
     return (
-        <BrowserRouter>
-            <Switch>
-                <Route path="/" exact component={Login}/>
-                <Route path="/login" component={Back}/>
-            </Switch>
-        </BrowserRouter>
+        <Switch>
+            <Route path="/" exact component={Orders}/>
+            <Route path="/cep/create" exact component={CreateCep}/>
+            <Route path="/users" exact component={Users}/>
+        </Switch>
     );
 }
 
