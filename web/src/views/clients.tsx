@@ -1,11 +1,16 @@
 import React,{useEffect, useState} from 'react'
 import api from '../services/api'
+import {VscGear} from 'react-icons/vsc'
+import { Link } from 'react-router-dom'
+
+
 
 interface Clients{
     id:number;
     cpf_cnpj: number;
     nickname: string;
     name:string;
+    lastName:string;
 }
 
 export default function Users(){
@@ -33,7 +38,12 @@ export default function Users(){
                         <tr key={client.id}>
                             <td>{client.cpf_cnpj}</td>
                             <td>{client.nickname}</td>
-                            <td>{client.name}</td>
+                            <td>{client.name+" "+client.lastName}</td>
+                            <td>
+                                <Link to={'/client/'+client.id}>
+                                    <VscGear size="30"/>
+                                </Link>
+                            </td>
                         </tr>
                     )})}
                 </tbody>

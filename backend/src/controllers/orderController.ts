@@ -12,7 +12,7 @@ export default{
             quantityProducts,
             quantity,
             price,
-            userID,
+            clientID,
             paymentType,
             deliverDay,
             deliverPeriod,
@@ -41,7 +41,7 @@ export default{
         order.paymentType=paymentType
         order.deliverDay=deliverDay
         order.deliverPeriod=deliverPeriod
-        order.user=userID
+        order.client=clientID
         order.itemOrder=itensOrder
 
         if(voucher!=0){
@@ -55,7 +55,7 @@ export default{
 
     async searchAll(req: Request, res: Response){
         const orderRep = getRepository(Order)
-        const orders = await orderRep.find({relations:['itemOrder','user']})
+        const orders = await orderRep.find({relations:['itemOrder','client']})
         res.json(orders)
     }
 

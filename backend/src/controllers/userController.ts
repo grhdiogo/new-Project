@@ -1,6 +1,5 @@
 import {getRepository} from 'typeorm'
-import User from '../models/User'
-import Cep from '../models/Cep'
+import Client from '../models/Client'
 import {Request, Response} from 'express'
 import * as Yup from 'yup'
 
@@ -16,7 +15,6 @@ export default{
             lastName,
             nickname,
             birthday,
-            nfe,
             telephone,
             telephone2,
             number,
@@ -24,54 +22,45 @@ export default{
             cepId
         } = req.body
         
-        const user = new User
+        const client = new Client
         
 
-        user.username=username
-        user.password=password
-        user.cpf_cnpj=cpf_cnpj
-        user.name=name
-        user.lastName=lastName
-        user.nickname=nickname
-        user.birthday=birthday
-        user.nfe=nfe
-        user.telephone=telephone
-        user.telephone2=telephone2
-        user.number=number
-        user.complement=complement
-        user.cep=cepId
+        client.username=username
+        client.password=password
+        client.cpf_cnpj=cpf_cnpj
+        client.name=name
+        client.lastName=lastName
+        client.nickname=nickname
+        client.birthday=birthday
+        client.telephone=telephone
+        client.telephone2=telephone2
+        client.number=number
+        client.complement=complement
+        client.cep=cepId
         
 
-        const userRep = getRepository(User)
-        
-        
-        await userRep.save(user)
-
+        const clientRep = getRepository(Client)
+        await clientRep.save(client)
         res.json("Usuário cadastrado")
-        
-
-        
-        
-
         
     },//FUNCTION SAVE
 
     async searchAll(req: Request, res: Response){
-        const userRep = getRepository(User)
-        const users = await userRep.find({relations:["cep"]})
-        res.json(users)
+        const clientRep = getRepository(Client)
+        const client = await clientRep.find({relations:["cep"]})
+        res.json(client)
     },//FUNCTION SEARCHALL
 
     async searchOne(req: Request, res: Response){
         const {id} = req.params
-        const userRep = getRepository(User)
-        const users = await userRep.find({where:{id:id},relations:["cep"]})
-        res.json(users)
+        const clientRep = getRepository(Client)
+        const client = await clientRep.findOne({where:{id:id},relations:["cep"]})
+        res.json(client)
 
     },//FUNCTION SEARCHONE
 
     async update(req: Request, res: Response){
-        const userRep = getRepository(User)
+        const clientRep = getRepository(Client)
         const{
             id,
             username,
@@ -81,7 +70,6 @@ export default{
             lastName,
             nickname,
             birthday,
-            nfe,
             telephone,
             telephone2,
             number,
@@ -89,28 +77,27 @@ export default{
             cepId
         } = req.body
         
-        const user = new User
+        const client = new Client
 
         
-        user.id=id
-        user.username=username
-        user.password=password
-        user.cpf_cnpj=cpf_cnpj
-        user.name=name
-        user.lastName=lastName
-        user.nickname=nickname
-        user.birthday=birthday
-        user.nfe=nfe
-        user.telephone=telephone
-        user.telephone2=telephone2
-        user.number=number
-        user.complement=complement
-        user.cep=cepId
+        client.id=id
+        client.username=username
+        client.password=password
+        client.cpf_cnpj=cpf_cnpj
+        client.name=name
+        client.lastName=lastName
+        client.nickname=nickname
+        client.birthday=birthday
+        client.telephone=telephone
+        client.telephone2=telephone2
+        client.number=number
+        client.complement=complement
+        client.cep=cepId
 
 
 
 
-        userRep.update(user.id,user)
+        clientRep.update(client.id,client)
 
         res.json("Usuário atualizado")
         
@@ -118,12 +105,12 @@ export default{
     },//FUNCTION UPDATE
 
     async delete(req: Request, res: Response){
-        const userRep = getRepository(User)
+        const clientRep = getRepository(Client)
         const{
             id,
         } = req.body
         
-        userRep.delete(id)
+        clientRep.delete(id)
 
         res.json("Usuário Deletado")
 

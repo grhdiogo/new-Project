@@ -39,7 +39,7 @@ export default{
     async searchOne(req: Request, res: Response){
         const {id} = req.params
         const productRep = getRepository(Product)
-        const product = await productRep.find({where:{id:id}})
+        const product = await productRep.findOne({where:{id:id}})
         res.json(product)
 
     },//FUNCTION SEARCHONE

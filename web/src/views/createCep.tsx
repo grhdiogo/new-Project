@@ -14,14 +14,13 @@ export default function CreateCep(){
     const [zone, setZone] = useState('')
     const [street, setStreet] = useState('')
 
+
     async function submit(event: FormEvent){
         event.preventDefault()
      
         const data = {zipCode,country,state,city,zone,street}
         const dataString = JSON.stringify(data)
         const jsonData = JSON.parse(dataString)
-
-        
         //await api.post('createCep', jsonData)
 
         alert("CEP cadastrado")

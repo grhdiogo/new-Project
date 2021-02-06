@@ -3,8 +3,8 @@ import Order from './Order';
 import Cep from './Cep'
 
 
-@Entity('user')
-export default class User{
+@Entity('client')
+export default class Client{
     @PrimaryGeneratedColumn()
     id: number;
     @Column()
@@ -22,8 +22,6 @@ export default class User{
     @Column()
     birthday: string;
     @Column()
-    nfe: string;
-    @Column()
     telephone: number;
     @Column()
     telephone2: number;
@@ -31,9 +29,9 @@ export default class User{
     number: number;
     @Column()
     complement: string;
-    @OneToMany(()=>Order,order => order.user,{cascade:['insert','update']})
+    @OneToMany(()=>Order,order => order.client,{cascade:['insert','update']})
     order: Order[]
-    @OneToOne(()=>Cep,cep => cep.user)
+    @OneToOne(()=>Cep,cep => cep.client)
     @JoinColumn({name:"cepId"})
     cep: Cep
 

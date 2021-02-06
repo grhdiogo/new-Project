@@ -9,7 +9,7 @@ interface Orders{
     deliverPeriod:string;
     paymentType:string;
     status:string;
-    user:{
+    client:{
         id:string;
         name:string;
         lastName:string
@@ -51,7 +51,7 @@ export default function Orders(){
                             <td>{order.deliverDay}</td>
                             <td>{order.deliverPeriod}</td>
                             <td>{order.id}</td>
-                            <td>{order.user.name +" "+ order.user.lastName}</td>
+                            <td>{order.client.name +" "+ order.client.lastName}</td>
                             <td>{order.paymentType}</td>
                             <td>{order.status}</td>
                         </tr>
