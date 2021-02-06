@@ -2,9 +2,20 @@ import React,{useEffect, useState, FormEvent} from 'react'
 import api from '../../services/api'
 import { useParams } from 'react-router-dom'
 import {Link, useHistory} from 'react-router-dom'
+import Select from 'react-select'
 
 interface Params{
     id:string;
+}
+
+
+interface Cep{
+    id:number;
+    zipCode:string;
+    country:string;
+    state:string;
+    zone:string;
+    street:string;
 }
 
 interface Client{
@@ -34,7 +45,7 @@ interface Client{
 export default  function EditClient(){
     const history = useHistory()
     const params = useParams<Params>()
-    const [client,setClient] = useState<Client>()
+    const [ceps, setCeps] = useState<Cep[]>([])
 
     const [id, setId] = useState('')
     const [username, setUsername] = useState('')
@@ -46,13 +57,18 @@ export default  function EditClient(){
     const [birthday, setBirthday] = useState('')
     const [telephone, setTelephone] = useState('')
     const [telephone2, setTelephone2] = useState('')
-    const [cepId, setCepId] = useState('')
     const [number, setNumber] = useState('')
     const [complement, setComplement] = useState('')
 
+    const [cepId, setCepId] = useState('')
+    const [country, setCountry] = useState('')
+    const [state, setState] = useState('')
+    const [street, setStreet] = useState('')
+    const [zipCode, setZipcode] = useState('')
+    const [zone, setZone] = useState('')
+
     useEffect(()=>{
         api.get(`user/${params.id}`).then(res=>{
-           setClient(res.data)
            setId(res.data.id)
            setUsername(res.data.username)
            setPassword(res.data.password)
@@ -66,36 +82,62 @@ export default  function EditClient(){
            setCepId(res.data.cep.id)
            setNumber(res.data.number)
            setComplement(res.data.complement)
+           setZipcode(res.data.cep.zipCode)
+           setCountry(res.data.cep.country)
+           setState(res.data.cep.state)
+           setZone(res.data.cep.zone)
+           setStreet(res.data.cep.street)
+        })
+        api.get('cepsList').then(res=>{
+            setCeps(res.data)
         })
     },[params.id])
 
-    if(!client){
+    if(!id){
         return(<p>Carregando...</p>)
     }
+    
+    const options = [{}]
+
+    for (let i = 0; i < ceps.length; i++) {
+        options[i]={value:ceps[i].id,label:ceps[i].zipCode}
+    }
+
+    
 
     async function submit(event: FormEvent){
         event.preventDefault()
-        
-     
+    
         const data = {id,username,password,cpf_cnpj,name,lastName,nickname,birthday,telephone,telephone2,cepId,number,complement}
         const dataString = JSON.stringify(data)
         const jsonData = JSON.parse(dataString)
 
-        
         await api.post('updateUser', jsonData)
-
         alert("Usuário alterado")
         history.push("/")
-        
-        
+    }
+
+    function changeCep(value){
+        if(value!=null){
+            ceps.forEach(cep=>{
+                if(cep.id===value.value){
+                    setCountry(cep.country)
+                    setZone(cep.zone)
+                    setStreet(cep.street)
+                    setZone(cep.zone)
+                    setZipcode(cep.zipCode)
+                    setCepId(value.value)
+                    
+                }
+            })
+        }
     }
 
 
     return(
         <div>
             <form>
-                
-                <input id="id" defaultValue={client.id} type="hidden"></input><br/>
+                <input id="id" defaultValue={id} type="hidden"></input><br/>
 
                 <label>Login</label>
                 <input id="username"  value={username} onChange={event => setUsername(event.target.value)}></input><br/>
@@ -125,30 +167,22 @@ export default  function EditClient(){
                 <input id="telephone2" type="number" value={telephone2} onChange={event => setTelephone2(event.target.value)}></input><br/>
 
                 <br/>
-               <input id="cepId" type="hidden" value={username}  onChange={event => setCepId(event.target.value)}></input><br/>
+               <input id="cepId" type="hidden" value={cepId}  onChange={event => setCepId(event.target.value)}></input><br/>
 
-                <label>Cep</label>
-                <input id="zipCode"  defaultValue={client.cep.zipCode}></input><br/>
+                <label id="zipCode">Cep: </label><Select options={options} onChange={changeCep} placeholder={zipCode}/>
+                <label id="country">{'País: '+country}</label><br/>
+                <label id="state">{'Estado: '+state}</label><br/>
+                <label id="zone">{'Bairro: '+zone}</label><br/>
+                <label id="street">{'Rua: '+street}</label><br/>
+                
 
-                <label>País</label>
-                <input id="country" defaultValue={client.cep.country}></input><br/>
 
-                <label>Estado</label>
-                <input id="state" defaultValue={client.cep.state}></input><br/>
-
-                <label>Bairro</label>
-                <input id="zone" defaultValue={client.cep.zone}></input><br/>
-
-                <label>Rua</label>
-                <input id="street" defaultValue={client.cep.street}></input><br/>
-
-                <label>Número</label>
-                <input id="number" type="number" value={number} onChange={event => setNumber(event.target.value)}></input><br/>
+                <label>Número</label><input id="number" type="number" value={number} onChange={event => setNumber(event.target.value)}></input><br/>
 
                 <label>Complemento</label>
                 <input id="complement" value={complement} onChange={event => setComplement(event.target.value)}></input><br/>
 
-                <input type="submit" value="Enviar" onClick={submit}/><br/>
+                <input type="submit" value="Enviar" onClick={submit}/>
                     <div>
                         <Link to="/" >Voltar</Link>
                     </div>
