@@ -17,7 +17,7 @@ export default function Users(){
     const [clients, setClientes] = useState<Clients[]>([])
 
     useEffect(()=>{
-        api.get('usersList').then(res=>{
+        api.get('clientsList').then(res=>{
            setClientes(res.data)
         })
     })

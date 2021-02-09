@@ -1,22 +1,24 @@
-import {BrowserRouter, Switch, Route} from 'react-router-dom'
-
+import {Switch} from 'react-router-dom'
+import React from 'react'
 
 import Orders from './views/orders'
 import CreateCep from './views/createCep'
-import Users from './views/clients'
+import Clients from './views/clients'
 import EditClient from './views/clients/editClient'
+import Login from './views/login'
 
+import Route from './routes/private'
 
-
-function Routes(){
+export default  function Routes(){
+   
     return (
         <Switch>
-            <Route path="/" exact component={Orders}/>
-            <Route path="/cep/create" exact component={CreateCep}/>
-            <Route path="/users" exact component={Users}/>
-            <Route path="/client/:id" exact component={EditClient}/>
+            <Route path="/" exact component={Login}/>
+            <Route path="/cep/create" exact component={CreateCep} restrict/>
+            <Route path="/clients" exact component={Clients} restrict/>
+            <Route path="/client/:id" exact component={EditClient} restrict/>
+            <Route path='/orders' component={Orders} restrict/>
         </Switch>
     );
 }
 
-export default Routes;
