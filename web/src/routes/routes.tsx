@@ -1,13 +1,14 @@
 import {Switch} from 'react-router-dom'
 import React from 'react'
 
-import Orders from './views/orders'
-import CreateCep from './views/createCep'
-import Clients from './views/clients'
-import EditClient from './views/clients/editClient'
-import Login from './views/login'
+import Orders from '../views/orders'
+import CreateCep from '../views/createCep'
+import Clients from '../views/clients'
+import EditClient from '../views/clients/editClient'
+import Login from '../views/login'
 
-import Route from './routes/private'
+import Route from './private'
+
 
 export default  function Routes(){
    

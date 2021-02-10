@@ -1,25 +1,32 @@
-import React,{useEffect, useState} from 'react'
+import React from 'react'
 import { Route as ReactDOMRoute, Redirect } from "react-router-dom";
+import {IsLogged} from '../components/IsLogged'
+import SideBar from '../components/sideBar'
+import MenuBar from '../components/MenuBar'
 
-import api from '../services/api'
+import '../styles/layout.css'
 
 function Route({ restrict = false, component: Component, ...rest }) {
-    const [isLogged, setLogin] = useState(Boolean)
-    
-    useEffect(()=>{
-        api.get('isLogged').then((res)=>{
-            setLogin(res.data)
-            console.log(isLogged)
-            
-        })
-    })
+    const isLogged = IsLogged()
 
   return (
         <ReactDOMRoute {...rest} render={(props)=>(
             restrict === false
                 ? <Component {...props}/>
                 : isLogged === true
-                ? <Component {...props}/>
+                ? 
+                    <div id="body">
+                        <div id="sideBar">
+                            <SideBar/>
+                        </div>
+                        <div id="header">
+                            <MenuBar/>
+                        </div>
+                        <div id="content">
+                        <Component {...props}/>
+                        </div>
+                    </div>
+
                 :  <Redirect to={"/"}/>
         )}/>
   )}

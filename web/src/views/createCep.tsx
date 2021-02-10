@@ -24,7 +24,7 @@ export default function CreateCep(){
         //await api.post('createCep', jsonData)
 
         alert("CEP cadastrado")
-        history.push("/")
+        history.push("/orders")
         
         
     }
@@ -42,7 +42,7 @@ export default function CreateCep(){
                     <label>Rua</label><input id="street" value={street} onChange={event => setStreet(event.target.value)}/><br/>
                     <input type="submit" value="Enviar" onClick={submit}/><br/>
                     <div>
-                        <Link to="/" ><FiArrowLeft size={30}/></Link>
+                        <Link to="/orders" ><FiArrowLeft size={30}/></Link>
                     </div>
                 </form>
            </div>

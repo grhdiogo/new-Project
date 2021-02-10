@@ -1,10 +1,8 @@
 import React,{FormEvent, useState} from 'react'
 import api from '../services/api'
 import {useHistory} from 'react-router-dom'
-import Axios from 'axios'
 
 export default function Login(){
-    Axios.defaults.withCredentials = true;
     const history = useHistory()
     const [user, setUsername] = useState('')
     const [pass, setPassword] = useState('')
@@ -18,12 +16,10 @@ export default function Login(){
         const jsonData = JSON.parse(dataString)
         
         api.post('login',jsonData).then(res=>{
-            if(res.data==true){
-                setState('Usuário logado')
+            if(res.data===true){
                 setTimeout(() => {
-                    history.push("/clients")
+                    history.push("/orders")
                 },1000);
-                
             }else{
                 setState('Usuário ou senha inválidos')
             }
